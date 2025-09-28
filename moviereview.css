@@ -1,0 +1,282 @@
+/* ... (Keep previous :root variables) ... */
+
+:root {
+    --bg-color: #0A0A0A; /* Deeper Black Background */
+    --card-color: #1A1A1A;
+    --text-color: #f0f0f0;
+    --accent-color: #00FFFF;
+    --hover-color: #00b4b4;
+    --rating-star: gold;
+    --timing-fast: 0.2s;
+    --timing-medium: 0.4s;
+}
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    /* Smooth background color transition */
+    transition: background-color var(--timing-medium) ease;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseBorder {
+    0% { box-shadow: 0 0 0 rgba(0, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); }
+    100% { box-shadow: 0 0 0 rgba(0, 255, 255, 0.4); }
+}
+
+/* Header & Navbar */
+.navbar {
+    /* ... (Keep previous styles) ... */
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    animation: fadeIn 0.8s ease-out; /* Fade in on load */
+}
+
+/* Search Input Effects */
+#search-input {
+    /* ... (Keep previous styles) ... */
+    transition: border-color var(--timing-fast) ease, box-shadow var(--timing-fast) ease;
+}
+#search-input:focus {
+    border-color: var(--hover-color);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); /* Glowing effect */
+    outline: none;
+}
+
+.search-btn {
+    /* ... (Keep previous styles) ... */
+    transition: background-color var(--timing-fast) ease, transform var(--timing-fast) ease;
+}
+.search-btn:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05); /* Subtle scale up on hover */
+}
+
+/* Main Content and Grid */
+.container {
+    padding: 2rem 5%;
+}
+
+#section-title {
+    /* ... (Keep previous styles) ... */
+    animation: fadeIn 1s ease-out 0.2s backwards; /* Delayed fade in */
+}
+
+/* --- IN YOUR style.css FILE --- */
+
+/* Replace or update this section: */
+.movie-grid {
+    display: grid;
+    /* This is the key change for responsive side-by-side layout: */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 30px; /* Space between the movie cards */
+    padding: 1rem 0;
+}
+
+/* Add the responsive media queries below (highly recommended for attractiveness) */
+
+/* For small screens (tablets) */
+@media (max-width: 768px) {
+    .movie-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* For mobile phones (stacking or 2-column) */
+@media (max-width: 500px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+    /* ... (Keep previous styles) ... */
+
+
+/* Movie Card Styles (Enhanced Animations) */
+.movie-card {
+    /* ... (Keep previous styles) ... */
+    /* Set up for the stagger fade-in in JS */
+    opacity: 0;
+    transform: translateY(20px);
+    
+    transition: 
+        transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), /* Custom, bouncy ease */
+        box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 255, 255, 0.1); /* Subtle border */
+}
+
+.movie-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0) 50%); /* Dark gradient overlay */
+    z-index: 1;
+}
+
+.movie-card:hover {
+    transform: translateY(-8px) scale(1.02); /* More noticeable lift and slight scale */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9), 0 0 15px var(--accent-color); /* Stronger shadow with accent glow */
+}
+
+.movie-card img {
+    /* ... (Keep previous styles) ... */
+    transition: transform 0.5s ease-out;
+}
+
+.movie-card:hover img {
+    transform: scale(1.05); /* Subtle zoom effect on poster */
+}
+
+.movie-info {
+    /* ... (Keep previous styles) ... */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    padding: 1rem;
+    padding-bottom: 1.5rem; /* More space at the bottom */
+}
+
+.movie-rating {
+    /* ... (Keep previous styles) ... */
+    transition: background-color var(--timing-fast) ease;
+}
+
+/* Modal Styles (Cinematic Opening Effect) */
+.modal {
+    /* ... (Keep previous styles) ... */
+    backdrop-filter: blur(5px); /* Cinematic blur effect on background */
+}
+
+.modal-content {
+    /* ... (Keep previous styles) ... */
+    animation: fadeIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Modal pop-in effect */
+    border: 2px solid var(--accent-color); /* Define the edge */
+}
+
+/* Star Rating Animation */
+.star-rating label {
+    /* ... (Keep previous styles) ... */
+    transition: transform var(--timing-fast) ease, color var(--timing-fast) ease;
+}
+.star-rating label:hover {
+    transform: scale(1.2); /* Star bounce effect */
+}
+.star-rating input:checked ~ label {
+    color: var(--rating-star);
+    animation: pulseBorder 1s infinite alternate; /* Gentle pulsating glow on selected star */
+}
+
+/* Review Form Button Animation */
+#review-form button {
+    /* Use same styling as search-btn but apply the pulse for attention */
+    padding: 0.6rem 1.5rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+    /* Subtle pulsing effect to encourage submission */
+    animation: pulseBorder 2s infinite ease-in-out; 
+}
+#review-form button:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05);
+}
+/* --- Review Section Container Styling --- */
+.review-section {
+    margin-top: 2.5rem; /* Increased space from movie plot */
+    padding-top: 2rem;
+    border-top: 3px solid rgba(0, 255, 255, 0.2); /* Thicker, defined separator line */
+}
+
+/* --- Individual Review List and Items --- */
+.review-list {
+    max-height: 250px;
+    overflow-y: auto; /* Enable scrolling for many reviews */
+    padding-right: 10px; /* Space for the scrollbar */
+    margin-bottom: 2rem;
+}
+
+.review-item {
+    background-color: #2a2a2a; /* Slightly lighter background for the review box */
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-color); /* Highlight border */
+    transition: transform 0.2s;
+}
+
+.review-item:hover {
+    transform: translateX(5px); /* Subtle slide effect on hover */
+}
+
+.review-item strong {
+    color: var(--text-color);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+}
+
+.review-comment {
+    font-style: italic;
+    color: #b0b0b0;
+}
+
+/* --- Submission Form Styles --- */
+.review-form h4 {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.review-form textarea {
+    /* Existing textarea styles are already good, but ensure they are here: */
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    resize: vertical;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.review-form textarea:focus {
+    border-color: var(--hover-color);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+/* --- Star Rating Alignment --- */
+.star-rating {
+    margin-bottom: 1rem;
+}
